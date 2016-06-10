@@ -5,3 +5,6 @@ do
     /bin/rm -rf ~/.$item
     cp -r config_files/$item ~/.$item
 done
+
+chmod -R g-rwx ~.ssh
+chmod -R o-rwx ~.ssh
