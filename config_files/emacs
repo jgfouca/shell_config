@@ -1,0 +1,321 @@
+;; .emacs file for configuring emacs
+;;
+
+;; (autoload 'ruby-mode "ruby-mode" "Ruby editing mode." t)
+;; (add-to-list 'auto-mode-alist '("\.rb$" . ruby-mode))
+;; (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+
+;;; If you want Emacs to truncate long lines instead of wrapping them,
+;;; uncomment the following lines and add them to your ~/.emacs file:
+
+; (add-hook 'c-mode-common-hook
+;           #'(lambda ()
+; 	      (set (make-local-variable 'truncate-lines) 't)))
+
+;; turn ido on
+(require 'ido)
+(ido-mode t)
+
+(add-to-list 'load-path (expand-file-name "~/.emacs-data"))
+
+(load-library "e-other-window")
+(load-library "next-screen")
+(load-library "next-buffer")
+
+(if (>= emacs-major-version 21)
+    (progn
+      (menu-bar-mode -1)))
+
+(defconst framework-c-style
+  '((c-tab-always-indent        . t)
+    (c-basic-offset             . 2)
+    (c-comment-only-line-offset . 0)
+    (c-hanging-braces-alist     . ((substatement-open after)
+                                   (brace-list-open)))
+    (c-hanging-colons-alist     . ((member-init-intro before)
+                                   (inher-intro)
+                                   (case-label after)
+                                   (label after)
+                                   (access-label after)))
+    (c-cleanup-list             . (scope-operator
+                                   empty-defun-braces
+                                   defun-close-semi))
+    (c-offsets-alist            . ((inline-open       . 0)
+                                   (arglist-close     . c-lineup-arglist)
+                                   (substatement-open . 0)
+                                   (case-label        . 0)
+                                   (statement-case-open . 2)
+                                   (inextern-lang     . -2)
+                                   (innamespace       . -2)
+                                   (block-open        . 0)
+                                   (knr-argdecl-intro . -)
+                                   (stream-op         . c-lineup-streamop)
+                                   (member-init-intro . +)))
+    (c-echo-syntactic-information-p . t)
+    )
+  "Framework C Programming Style")
+
+(defun loadCh ()
+  "Load the current buffers corresponding .C/.h file"
+  (interactive)
+  ;; Make seaches case-sensitive
+  (let ((case-fold-search nil)
+        (fn ""))
+  ;; Build the sibling file name
+  (if (string-match "\.h$" buffer-file-name) ;; Change from .h to .C
+      (progn
+        (setq fn (concat (file-name-sans-extension buffer-file-name) ".C"))
+        (if (string-match "/include/" fn)
+            (setq fn (replace-match "/src/" nil nil fn))
+          ))
+    (if (string-match "\.C$" buffer-file-name) ;; Change from .C to .h
+        (progn
+          (setq fn (concat (file-name-sans-extension buffer-file-name) ".h"))
+          (if (string-match "/src/" fn)
+              (setq fn (replace-match "/include/" nil nil fn))
+            ))
+      (if (string-match "\.hpp$" buffer-file-name) ;; Change from .hpp to .cpp
+          (progn
+            (setq fn (concat (file-name-sans-extension buffer-file-name) ".cpp"))
+            (if (string-match "/include/" fn)
+                (setq fn (replace-match "/src/" nil nil fn))
+              ))
+        ;; Change from .cpp to .hpp
+        (progn
+          (setq fn (concat (file-name-sans-extension buffer-file-name) ".hpp"))
+          (if (string-match "/src/" fn)
+              (setq fn (replace-match "/include/" nil nil fn))
+            )))))
+  ;; Open the file if it exists
+  (if (file-exists-p fn)
+      (find-file fn)
+    (if (string-match "/include/" fn)
+        (progn
+          (setq fn (replace-match "/src/" nil nil fn))
+          (if (file-exists-p fn)
+              (find-file fn)))
+      (if (string-match "\.hpp$" buffer-file-name)
+          (progn
+            (setq fn (concat (file-name-sans-extension buffer-file-name) ".tcc"))
+            (if (file-exists-p fn)
+                (find-file fn)))
+      (message "File doesn't exist: %s" fn))))))
+
+;; Customizations for all of c-mode, c++-mode, and objc-mode
+(defun dgbaur-c-mode-common-hook ()
+  (c-toggle-auto-state -1)
+  (c-toggle-auto-hungry-state -1)
+  ;;  (light-symbol-mode 1)
+  ;;  (c++-html-helper-mode 1)
+  ;;  (doxymacs-mode t)
+  ;;  (doxymacs-font-lock)
+  ;; (local-set-key [(meta return)] 'semantic-ia-complete-symbol)
+  (local-set-key [(control return)] 'dabbrev-expand)
+  ;; (local-set-key "\C-c?" 'semantic-ia-complete-symbol-menu)
+  ;; (local-set-key "\C-c>" 'semantic-complete-analyze-inline)
+  ;; (local-set-key "\C-cp" 'semantic-analyze-proto-impl-toggle)
+  ;; (local-set-key "." 'semantic-complete-self-insert)
+  ;; (local-set-key ">" 'semantic-complete-self-insert)
+  ;;; keybindings for all supported languages.  We can put these in
+  ;;; c-mode-base-map because c-mode-map, c++-mode-map, objc-mode-map,
+  ;;; java-mode-map, and idl-mode-map inherit from it.
+;  (local-set-key "\C-m" 'newline-and-indent)
+  (local-set-key "\C-cc" 'loadCh)
+  (c-set-style "user") ;; add my personal style and set it for the current buffer
+  (if buffer-file-name
+      (progn
+        (if (string-match "\\.dox$" buffer-file-name)
+            (progn
+              (set-fill-column 100)
+              (auto-fill-mode 1)
+              (flyspell-mode 1)))
+        (if (string-match "/framework/" buffer-file-name)
+            (c-add-style "framework" framework-c-style t)
+          (c-add-style "framework" framework-c-style t)))))
+
+;; Use F1 to get man page help
+(global-set-key [(f1)] (lambda () (interactive) (manual-entry (current-word))))
+(define-key global-map [f1] 'next-shell)
+(define-key global-map [(shift f1)] 'prev-shell)
+(define-key global-map [f2] 'next-buffer)
+(define-key global-map [(shift f2)] 'prev-buffer)
+(define-key global-map [f3] 'next-compile)
+(define-key global-map [(shift f3)] 'prev-compile)
+(define-key global-map [f5] 'compile)
+(define-key global-map [(shift f5)] 'kill-compilation)
+(define-key global-map [f6] 'next-error)
+(define-key global-map [(shift f6)] 'previous-error)
+(define-key global-map [(control f6)] 'compilation-next-file)
+(define-key global-map [(shift control f6)] 'compilation-previous-file)
+(define-key global-map [f10] 'cm-next-window)
+(define-key global-map [(shift f10)] 'cm-prev-window)
+
+(defun cm-next-window ()
+  (interactive)
+  (other-window 1)
+  (e-other-window-blink)
+  )
+
+;;; map it to the standard keybinding to swith windows
+(defun cm-prev-window ()
+  (interactive)
+  (other-window -1)
+  (e-other-window-blink)
+  )
+
+(defun cm-delete-window ()
+  (interactive)
+  (let ((i 0))
+    (if (and (= (car (window-edges (previous-window))) (car (window-edges)))
+             (< (cadr (window-edges (previous-window))) (cadr (window-edges))))
+        (setq i -1))
+    (if (and (= (cadr (window-edges (previous-window))) (cadr (window-edges)))
+             (< (car (window-edges (previous-window))) (car (window-edges))))
+        (setq i -1))
+    (delete-window)
+    (other-window i)
+    (e-other-window-blink)))
+
+(setq e-other-window-interval .10)
+(copy-face 'region 'e-other-window-overlay-face)
+(load-library "e-other-window")
+
+;; Supress the GNU startup message
+(setq inhibit-startup-message t)
+
+;; Turn off the menu bar
+;;(menu-bar-mode -1)
+
+;; Turn off the scroll bar
+;;(scroll-bar-mode -1)
+
+;; Make the buffer re-highlight when we recenter
+(global-set-key "\C-\\" 'hilit-highlight-buffer)
+(global-set-key "\C-l" 'recenter)
+
+(define-key global-map [(meta left)] 'backward-sexp)
+(define-key global-map [(meta right)] 'forward-sexp)
+
+;; No tabs-- use spaces when indenting (doesn't affect Makefiles,
+;; does affect text files and code, doesn't affect existing tabs).
+;; The use of setq-default means this only affects modes that don't
+;; overwrite this setting.
+(setq-default indent-tabs-mode nil)
+
+;; get C and C++ editting to work on the proper files
+(setq auto-mode-alist
+        (append '(("\\.c$" . c-mode)
+                  ("\\.h$" . c++-mode)
+                  ("\\.C$" . c++-mode)
+                  ("\\.tcc$" . c++-mode)
+                  ("\\.c[+][+]$" . c++-mode))
+                auto-mode-alist))
+
+;; JGF hacks for mac
+(global-set-key "\M-b" 'backward-sexp)
+(global-set-key "\M-f" 'forward-sexp)
+(global-set-key "\M-B" 'backward-word)
+(global-set-key "\M-F" 'forward-word)
+
+;; JGF enable paren highlighting
+;(show-paren-mode 1)
+
+;; JGF make a shortcut for the goto-line function
+(global-set-key "\C-l" 'goto-line)
+
+;; JGF make a more convenient reg expr search
+(global-set-key "\M-s" 'isearch-forward-regexp)
+
+;; JGF make a more convenient reg expr search and replace
+(global-set-key "\M-$" 'query-replace-regexp)
+
+;; JGF make it easy to delete trailing whitespace
+(global-set-key "\C-t" 'delete-trailing-whitespace)
+
+;; JGF make a convenient command to kill to the beginning of the line
+;; (note, this works in bash already)
+(global-set-key "\C-j" 'fc-kill-to-beginning-of-line)
+(defun fc-kill-to-beginning-of-line ()
+  "Kill from the beginning of the line to point."
+  (interactive)
+  (kill-region (point-at-bol)
+               (point)))
+
+;; JGF When opening multiple windows, split them vertically and give them
+;; equal space. This does not work when opening a large number of files.
+;;(require 'display-buffer-for-wide-screen)
+
+;; make a shortcut for refreshing current buffer
+(defun refresh-file ()
+  (interactive)
+  (revert-buffer t t t)
+  )
+
+;; ;; JGF Set F5 to refresh the buffer
+;; (global-set-key [f5] 'refresh-file)
+
+;; JGF Turn off vc-git loading
+(setq vc-handled-backends nil)
+
+;; JGF Make it convient to seek based on ([{ enclosure
+;; C-f,C-b are pretty useless by default, they just do what the left/right
+;; arrow keys do. This change should make them a lot more useful
+;(global-set-key "\C-f" 'forward-sexp)
+;(global-set-key "\C-b" 'forward-sexp)
+
+(add-hook 'comint-output-filter-functions 'shell-strip-ctrl-m)
+
+(setq font-lock-maximum-decoration t)
+(global-font-lock-mode t)
+
+;; Set "Windows" GUI colors for emacs, including showing selection.
+                                           ; selection
+(transient-mark-mode 1)                    ; show selections
+(set-face-foreground 'region "white")
+(set-face-background 'region "Navy")
+
+                                           ; status bar
+;(set-face-foreground 'modeline "grey")    ; status bar
+;(set-face-background 'modeline "black")
+
+(set-background-color "black")
+(set-foreground-color "white")
+
+(set-face-foreground 'highlight "DarkGreen")   ; hyperlink
+(set-face-background 'highlight "white")       ; hyperlink
+
+(set-face-foreground 'font-lock-comment-face "DarkGreen")
+(set-face-foreground 'font-lock-variable-name-face "Brown")
+(set-face-foreground 'font-lock-string-face "DarkOrchid")
+(set-face-foreground 'font-lock-keyword-face "cyan")
+(set-face-foreground 'font-lock-function-name-face "cyan")
+(set-face-foreground 'font-lock-type-face "Red")
+
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(c++-mode-hook nil)
+ '(c-mode-common-hook (quote (dgbaur-c-mode-common-hook)))
+ '(global-auto-revert-mode t nil (autorevert))
+ '(safe-local-variable-values (quote ((py-continuation-offset . 4) (py-indent-offset . 4))))
+ '(show-trailing-whitespace t)
+ )
+
+
+;; For cmake
+(setq auto-mode-alist
+        (append
+            '(("CMakeLists\\.txt\\'" . cmake-mode))
+               '(("\\.cmake\\'" . cmake-mode))
+                  auto-mode-alist))
+
+(autoload 'cmake-mode "/usr/local/share/cmake/editors/emacs/cmake-mode.el" t)
+

@@ -1,0 +1,33 @@
+[user]
+	name = James Foucar
+	email = jgfouca@sandia.gov
+[branch]
+	autosetuprebase = always
+        rebase = true
+[color]
+	ui = true
+
+[alias]
+        # Removes *all* untracked files, including ignored files
+        super-clean-repo = "!f() { git ls-files --others | cut -f2 | sort -u ; }; /bin/rm -fv `f`"
+
+        # Simple update
+        pull-subs = "submodule foreach git pull --rebase"
+
+        # Simple init
+        init-subs = "!git submodule init && git submodule update" && git submodule foreach git checkout master
+
+        # Checkout with submodules (for detaching HEAD, use superrepo-branch-switch to change branches)
+        checkout-subs = "!f() { git checkout $1; git submodule update --checkout --recursive; }; f"
+	clone = =
+[http]
+	sslVerify = false
+[push]
+	default = simple
+[merge]
+	summary = true
+	renamelimit = 99999
+[core]
+	editor = emacs -nw
+        gitproxy=wwwproxy.sandia.gov:80
+#        no_proxy=localhost,.sandia.gov,localhost,127.0.0.1,::1

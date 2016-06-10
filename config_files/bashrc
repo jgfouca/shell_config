@@ -1,0 +1,150 @@
+# base-files version 3.7-1
+
+# To pick up the latest recommended .bashrc content,
+# look in /etc/defaults/etc/skel/.bashrc
+
+# source the system wide bashrc if it exists
+if [ -e /etc/bashrc ] ; then
+  source /etc/bashrc
+fi
+
+unset PROMPT_COMMAND
+
+if [ -e /projects/modulefiles/utils/sems-modules-init.sh ]; then
+    source /projects/modulefiles/utils/sems-modules-init.sh
+fi
+
+# PATH; it is important to set these here so that non-login shells
+# pick up these changes. For example, they will be picked up by
+# % ssh $(hostname) which $(exe)
+
+export PATH=/usr/local/bin:$PATH    # kinit
+export PATH=/sierra/dev/jgfouca/repositories/toolset/sntools/engine:/sierra/dev/jgfouca/repositories/toolset/contrib:$PATH
+export PATH=/usr/netpub/git/bin:$PATH # git
+export PATH=~/util:$PATH
+export PATH=~/downloaded-packages/emacs-23.2/install/bin:$PATH
+export PATH=/usr/netpub/valgrind-3.8.1/bin:$PATH
+export PATH=/usr/netpub/graphviz/graphviz-2.30.1/bin:$PATH # graphviz
+export PATH=/usr/netpub/kcachegrind-0.7.4/bin:$PATH
+export LD_LIBRARY_PATH=/usr/netpub/graphviz/graphviz-2.30.1/lib:$LD_LIBRARY_PATH
+export PATH=/usr/local/java/jdk1.7.0_21/bin:$PATH
+
+# Shell Options
+# #############
+
+# See man bash for more options...
+
+set -o noclobber    #turn off clobbering when redirecting out/err
+set -o notify       #notify immediately when processes finish
+set -o emacs        #use emacs-style command line editing
+
+shopt -s histappend #append rather than overwrite the history on disk
+shopt -s cdspell    #auto-fix spelling mistakes when using the cd command
+shopt -s cmdhist    #multi-line commands are added into history all at once
+#shopt -s extglob    #turns on extended pattern matching for all commands
+
+# Set ulimit, we don't want to crash the machine
+ulimit -S -v 40097152
+
+export MACHINE_POOL=$HOME/machine_list
+
+# Completion options
+# ##################
+
+# These completion tuning parameters change the default behavior of bash_completion:
+
+# If this shell is interactive, turn on programmable completion enhancements.
+if [ $(hostname) != "sass8000" ]
+then
+    case $- in
+        *i*) source $BASH_COMPLETION
+    esac
+fi
+
+# Switch to clang
+function sc
+{
+   echo 'module purge'
+   echo 'module load sierra-devel'
+   echo 'module load sierra-compiler/clang/3.0'
+   module purge
+   module load sierra-devel
+   module load sierra-compiler/clang/3.0
+}
+
+# History Options
+# ###############
+
+# Don't put duplicate lines in the history.
+export HISTCONTROL="ignoredups"
+
+# Ignore some controlling instructions
+export HISTIGNORE="[   ]*:&:bg:fg:exit"
+
+# Set a large history size
+export HISTSIZE=10000
+
+# Whenever displaying the prompt, write the previous line to disk
+# export PROMPT_COMMAND="history -a"
+
+
+# Aliases
+# #######
+
+if [ -e "${HOME}/.aliases" ] ; then
+    source "${HOME}/.aliases"
+fi
+
+# Functions
+# #########
+
+function rm
+{
+    while [ $# -gt 0 ]
+    do
+      normpath=$(basename $(dirname $1/crap))
+      if [ -e ~/Trash/$normpath ]
+      then
+          for s in $(seq 1000)
+          do
+            if [ ! -e ~/Trash/${normpath}__rm__$s ]
+            then
+                mv -f $1 ~/Trash/${normpath}__rm__$s
+                break
+            fi
+          done
+      else
+          mv -f $1 ~/Trash
+      fi
+      shift
+    done
+}
+
+function pathadd
+{
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="$1:$PATH"
+    fi
+}
+
+function ldpathadd
+{
+    if [ -d "$1" ] && [[ ":$LD_LIBRARY_PATH:" != *":$1:"* ]]; then
+        LD_LIBRARY_PATH="$1:$LD_LIBRARY_PATH"
+    fi
+}
+
+#Set prompts
+export PS1="\[\e[35;1m\]\h@\[\e[31;1m\]<\w>% \[\e[0m\]"
+export PS2="\[\e[31;1m\]> \[\e[0m\]"
+
+# Set colors
+source ~/.setup_colors
+
+#Set umask
+umask 002
+
+#function cd
+#{
+#    eval $(bin/my_cd.py $@)
+#}

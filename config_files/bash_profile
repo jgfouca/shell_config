@@ -1,0 +1,69 @@
+# To pick up the latest recommended .bash_profile content,
+# look in /etc/defaults/etc/skel/.bash_profile
+
+# ~/.bash_profile: executed by bash for login shells.
+
+# Set other env vars
+export BASH_COMPLETION=~/.bash_completion
+export PATH=.:/usr/sbin:~/bin:$PATH
+export PYTHONDOCS=/usr/share/doc/python-2.5.1/html
+export PATH=~/util:$PATH
+export GIT_EDITOR='emacs -nw'
+
+unset PROMPT_COMMAND
+
+# Sierra stuff
+#export SIERRA_INSTALL_DIR=???
+export SIERRA_SNTOOLS_PATH=/Users/jgfouca/Sierra/toolset
+export PATH=$SIERRA_SNTOOLS_PATH/sntools/engine:$SIERRA_SNTOOLS_PATH/contrib:$SIERRA_SNTOOLS_PATH/contrib/bin:$PATH
+# export SIERRA_SYSTEM=desktop_rh6
+# export SIERRA_PLATFORM=linux-clang-3.2-ip
+# export SIERRA_COMPILER=gcc
+# export SIERRA_COMPILER_VERSION=4.7.2
+# export GCC4HOME=/opt/local/lib/gcc47/gcc/x86_64-apple-darwin12/4.7.3
+# export MPIHOME=/opt/local/lib/openmpi
+# export MPI_BIN=/opt/local/lib/openmpi/bin
+# export MPI_LIB=/opt/local/lib/openmpi
+# export MPI_INCLUDE=/opt/local/include/openmpi
+# export MPI_LIBNAME=openmpi
+# export MPI_VERSION=1.6.4 # Actual: 1.7.2
+# export MPI_GLOBAL_OPTS="--mca btl ^openib"
+export PATH=/Users/jgfouca/Sierra/code/Nbtools/boost/tools/jam/src/bin.macosxx86_64:$PATH
+
+# Mac laptop stuff
+export PATH=~/Sierra/toolset/sntools/job_scripts/linux/openmpi:$PATH
+export PATH=/Applications/git-annex.app/Contents/MacOS:$PATH
+
+# HTTP and HTTPS
+PROXY=wwwproxy.sandia.gov:80
+#PROXY=sonproxy.sandia.gov:80
+export http_proxy=http://$PROXY
+export HTTP_PROXY=http://$PROXY
+export https_proxy=http://$PROXY
+export HTTPS_PROXY=http://$PROXY
+# RSYNC
+export rsync_proxy=$PROXY
+export RSYNC_PROXY=$PROXY
+
+# Source the system wide bashrc if it exists
+if [ -e /etc/bashrc ] ; then
+  source /etc/bashrc
+fi
+
+# Source the users bashrc if it exists
+if [ -e "${HOME}/.bashrc" ] ; then
+  source "${HOME}/.bashrc"
+fi
+
+# Set prompts
+export PS1="\[\e[35;1m\]\h@\[\e[31;1m\]<\w>% \[\e[0m\]"
+export PS2="\[\e[31;1m\]> \[\e[0m\]"
+
+# Set colors
+source ~/.setup_colors
+
+# Set umask
+umask 002
+
+# Set ulimit, we don't want to crash the machine
+ulimit -S -v 40097152

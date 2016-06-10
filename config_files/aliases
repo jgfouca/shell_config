@@ -1,0 +1,31 @@
+# Interactive operation...
+#alias rm="mv -f \!* ~/Trash" only works for tcsh, use function
+alias emptytrash='/bin/rm -rf ~/Trash/* ~/Trash/.*'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# My general aliases
+alias e='emacs -nw'
+alias cleanup='rm *~'
+alias emacs='emacs -geometry +1668+0'
+alias fn='find . -follow -name'
+alias cmake-clean='ls do-cmake* > /dev/null && /bin/rm -rf $(ls -1 | grep -v do-cmake)'
+
+# Default to human readable figures
+alias df='df -h'
+alias du='du -h'
+
+# Misc
+alias grep='grep --color'                     # show differences in colour
+
+# Some shortcuts for different directory listings
+alias ls='ls -hFG'                            # classify files in colour
+alias ll='ls -l'                              # long list
+alias la='ls -A'                              # all but . and ..
+alias l='ls -CF'                              #
+
+# Aliases for manuevering around directories faster
+alias gotowebapp='cd ~/web-app/app/usability-tracker'
+
+# Dump all preprocessor vars
+alias dumall='gcc -dM -E - < /dev/null'
