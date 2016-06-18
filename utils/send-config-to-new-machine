@@ -1,3 +1,4 @@
 #!/bin/bash -e
 
+cd $HOME
 scp -r .bashrc .bash_profile .bash_completion .aliases .emacs emacs .gitconfig .setup_colors .ssh ${1}:
