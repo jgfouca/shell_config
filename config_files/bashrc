@@ -8,6 +8,12 @@ if [ -e /etc/bashrc ] ; then
   source /etc/bashrc
 fi
 
+if [[ "$-" == *i* ]]; then
+    # up and down does autocomplete from history
+    bind '"\e[A":history-search-backward'
+    bind '"\e[B":history-search-forward'
+fi
+
 unset PROMPT_COMMAND
 
 if [ -e /projects/modulefiles/utils/sems-modules-init.sh ]; then
