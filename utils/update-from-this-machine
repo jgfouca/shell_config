@@ -1,7 +1,0 @@
-#!/bin/bash -e
-
-for item in $(/bin/ls -1 config_files)
-do
-    /bin/rm -rf config_files/$item
-    cp -r ~/.$item config_files/$item
-done

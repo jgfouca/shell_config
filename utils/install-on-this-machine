@@ -3,7 +3,7 @@
 for item in $(/bin/ls -1 config_files)
 do
     /bin/rm -rf ~/.$item
-    cp -r config_files/$item ~/.$item
+    ln -s `pwd`/config_files/$item ~/.$item
 done
 
 chmod -R g-rwx ~/.ssh
