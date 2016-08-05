@@ -19,7 +19,7 @@ alias du='du -h'
 alias grep='grep --color'                     # show differences in colour
 
 # Some shortcuts for different directory listings
-alias ls='ls -hFG'                            # classify files in colour
+alias ls='ls --color'                         # classify files in colour
 alias ll='ls -l'                              # long list
 alias la='ls -A'                              # all but . and ..
 alias l='ls -CF'                              #

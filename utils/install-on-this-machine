@@ -8,3 +8,9 @@ done
 
 chmod -R g-rwx ~/.ssh
 chmod -R o-rwx ~/.ssh
+
+chmod -R g-rwx ~/shell_config
+chmod -R o-rwx ~/shell_config
+
+chgrp -R jgfouca ~/shell_config
+chgrp -R jgfouca ~/.ssh
