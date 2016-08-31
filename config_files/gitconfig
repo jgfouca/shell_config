@@ -22,6 +22,7 @@
 	clone = =
 [http]
 	sslVerify = false
+	proxy = http://wwwproxy.sandia.gov:80
 [push]
 	default = simple
 [merge]

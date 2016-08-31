@@ -9,7 +9,7 @@ alias e='emacs -nw'
 alias cleanup='rm *~'
 alias emacs='emacs -geometry +1668+0'
 alias fn='find . -follow -name'
-alias cmake-clean='ls do-cmake* > /dev/null && /bin/rm -rf $(ls -1 | grep -v do-cmake)'
+alias cmake-clean='ls do-cmake* > /dev/null && /bin/rm -rf $(\ls -1 | grep -v do-cmake)'
 
 # Default to human readable figures
 alias df='df -h'
