@@ -18,9 +18,8 @@ unset PROMPT_COMMAND
 
 if [ -e /projects/sems/modulefiles/utils/sems-modules-init.sh ]; then
     source /projects/sems/modulefiles/utils/sems-modules-init.sh
+    module load sems-git sems-python/2.7.9 sems-pylint
 fi
-
-module load sems-git sems-python/2.7.9 sems-pylint
 
 # PATH; it is important to set these here so that non-login shells
 # pick up these changes. For example, they will be picked up by
