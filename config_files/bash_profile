@@ -35,8 +35,15 @@ export PATH=~/Sierra/toolset/sntools/job_scripts/linux/openmpi:$PATH
 export PATH=/Applications/git-annex.app/Contents/MacOS:$PATH
 
 # HTTP and HTTPS
-PROXY=wwwproxy.sandia.gov:80
-#PROXY=sonproxy.sandia.gov:80
+
+SRNPROXY=wwwproxy.sandia.gov:80
+SONPROXY=sonproxy.sandia.gov:80
+if curl --noproxy \* --max-time 1 -s development.sandia.gov; then
+    PROXY=$SRNPROXY
+else
+    PROXY=$SONPROXY
+fi
+
 export http_proxy=http://$PROXY
 export HTTP_PROXY=http://$PROXY
 export https_proxy=http://$PROXY
