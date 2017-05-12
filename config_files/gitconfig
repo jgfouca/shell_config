@@ -20,6 +20,9 @@
         # Checkout with submodules (for detaching HEAD, use superrepo-branch-switch to change branches)
         checkout-subs = "!f() { git checkout $1; git submodule update --checkout --recursive; }; f"
 	clone = =
+
+        # Simple sub update
+        su = "submodule update --init"
 [http]
 	sslVerify = false
 	proxy = http://wwwproxy.sandia.gov:80
