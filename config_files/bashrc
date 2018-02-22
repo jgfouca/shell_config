@@ -21,7 +21,7 @@ if [ -e /projects/sems/modulefiles/utils/sems-modules-init.sh ]; then
     module load sems-git sems-python/2.7.9 sems-pylint
 fi
 
-export CIME_MODEL=acme
+export CIME_MODEL=e3sm
 
 # PATH; it is important to set these here so that non-login shells
 # pick up these changes. For example, they will be picked up by
