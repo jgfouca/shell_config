@@ -311,3 +311,6 @@
  '(safe-local-variable-values (quote ((py-continuation-offset . 4) (py-indent-offset . 4))))
  '(show-trailing-whitespace t)
  )
+
+;; Uncomment to allow for no case auto-correction for replacements
+;; (setq case-replace nil)
