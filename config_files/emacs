@@ -23,6 +23,7 @@
 (load-library "e-other-window")
 (load-library "next-screen")
 (load-library "next-buffer")
+(require 'cmake-mode)
 
 (if (>= emacs-major-version 21)
     (progn
@@ -310,14 +311,3 @@
  '(safe-local-variable-values (quote ((py-continuation-offset . 4) (py-indent-offset . 4))))
  '(show-trailing-whitespace t)
  )
-
-
-;; For cmake
-(setq auto-mode-alist
-        (append
-            '(("CMakeLists\\.txt\\'" . cmake-mode))
-               '(("\\.cmake\\'" . cmake-mode))
-                  auto-mode-alist))
-
-(autoload 'cmake-mode "/usr/local/share/cmake/editors/emacs/cmake-mode.el" t)
-
