@@ -40,17 +40,19 @@ SRNPROXY=wwwproxy.sandia.gov:80
 SONPROXY=sonproxy.sandia.gov:80
 if curl --noproxy \* --max-time 1 -s development.sandia.gov; then
     PROXY=$SRNPROXY
-else
+elif curl --noproxy \* --max-time 1 -s melvin.sandia.gov; then
     PROXY=$SONPROXY
 fi
 
-export http_proxy=http://$PROXY
-export HTTP_PROXY=http://$PROXY
-export https_proxy=http://$PROXY
-export HTTPS_PROXY=http://$PROXY
-# RSYNC
-export rsync_proxy=$PROXY
-export RSYNC_PROXY=$PROXY
+if [ -n "$PROXY" ]
+   export http_proxy=http://$PROXY
+   export HTTP_PROXY=http://$PROXY
+   export https_proxy=http://$PROXY
+   export HTTPS_PROXY=http://$PROXY
+   # RSYNC
+   export rsync_proxy=$PROXY
+   export RSYNC_PROXY=$PROXY
+fi
 
 # Source the system wide bashrc if it exists
 if [ -e /etc/bashrc ] ; then
