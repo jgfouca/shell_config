@@ -38,9 +38,9 @@ export PATH=/Applications/git-annex.app/Contents/MacOS:$PATH
 
 SRNPROXY=wwwproxy.sandia.gov:80
 SONPROXY=sonproxy.sandia.gov:80
-if curl --noproxy \* --max-time 1 -s development.sandia.gov; then
+if curl --noproxy \* --max-time 1 -s development.sandia.gov >& /dev/null; then
     PROXY=$SRNPROXY
-elif curl --noproxy \* --max-time 1 -s jenkins-son.sandia.gov; then
+elif curl --noproxy \* --max-time 1 -s jenkins-son.sandia.gov >& /dev/null; then
     PROXY=$SONPROXY
 fi
 
