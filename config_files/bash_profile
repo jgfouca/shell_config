@@ -44,7 +44,7 @@ elif curl --noproxy \* --max-time 1 -s melvin.sandia.gov; then
     PROXY=$SONPROXY
 fi
 
-if [ -n "$PROXY" ]
+if [ -n "$PROXY" ]; then
    export http_proxy=http://$PROXY
    export HTTP_PROXY=http://$PROXY
    export https_proxy=http://$PROXY
