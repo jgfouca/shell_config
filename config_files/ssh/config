@@ -1,2 +1,6 @@
 Host *
   ServerAliveInterval 240
+  TCPKeepAlive no
+
+GSSAPIAuthentication yes
+GSSAPIDelegateCredentials yes
