@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+# TODO: We may need to install a different bash completion
+# depending on bash version.
+
 for item in $(/bin/ls -1 config_files)
 do
     /bin/rm -rf ~/.$item
