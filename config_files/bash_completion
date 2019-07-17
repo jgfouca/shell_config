@@ -31,18 +31,6 @@ fi
 
 BASH_COMPLETION_VERSINFO=(2 8)
 
-if [[ $- == *v* ]]; then
-    BASH_COMPLETION_ORIGINAL_V_VALUE="-v"
-else
-    BASH_COMPLETION_ORIGINAL_V_VALUE="+v"
-fi
-
-if [[ ${BASH_COMPLETION_DEBUG-} ]]; then
-    set -v
-else
-    set +v
-fi
-
 # Blacklisted completions, causing problems with our code.
 #
 _blacklist_glob='@(acroread.sh)'
@@ -2096,8 +2084,6 @@ unset user_completion
 unset -f have
 unset have
 
-set $BASH_COMPLETION_ORIGINAL_V_VALUE
-unset BASH_COMPLETION_ORIGINAL_V_VALUE
 
 # ex: filetype=sh
 
