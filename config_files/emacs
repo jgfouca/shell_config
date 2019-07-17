@@ -6,6 +6,7 @@
 ;; (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 
 (add-to-list 'interpreter-mode-alist '("python2" . python-mode))
+(add-to-list 'interpreter-mode-alist '("python3" . python-mode))
 
 ;;; If you want Emacs to truncate long lines instead of wrapping them,
 ;;; uncomment the following lines and add them to your ~/.emacs file:

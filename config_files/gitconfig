@@ -24,8 +24,23 @@
         # Simple sub update
         su = "submodule update --init"
 
+        # Easy status
+        s = "status"
+
+        # Easy pull
+        p = "pull"
+
+        # Easy branch
+        b = "branch"
+
+        # Easy checkout
+        co = "checkout"
+
+        # Easy fetch
+        f = "fetch"
+
         # Prune local branches that were deleted remotely
-        prune-local = "!f() { git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d ; }; f"
+        prune-local = "!f() { git fetch origin --prune; git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d ; }; f"
 
 [http]
 	sslVerify = false
