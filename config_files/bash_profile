@@ -40,7 +40,7 @@ SRNPROXY=wwwproxy.sandia.gov:80
 SONPROXY=sonproxy.sandia.gov:80
 if curl --noproxy \* --max-time 1 -s development.sandia.gov; then
     PROXY=$SRNPROXY
-elif curl --noproxy \* --max-time 1 -s melvin.sandia.gov; then
+elif curl --noproxy \* --max-time 1 -s jenkins-son.sandia.gov; then
     PROXY=$SONPROXY
 fi
 
