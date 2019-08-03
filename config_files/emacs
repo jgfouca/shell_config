@@ -211,6 +211,7 @@
         (append '(("\\.c$" . c-mode)
                   ("\\.h$" . c++-mode)
                   ("\\.C$" . c++-mode)
+                  ("\\.F90$" . f90-mode)
                   ("\\.tcc$" . c++-mode)
                   ("\\.c[+][+]$" . c++-mode))
                 auto-mode-alist))
