@@ -39,6 +39,9 @@
         # Easy fetch
         f = "fetch"
 
+        # Easy merge
+        m = "merge --no-ff"
+
         # Prune local branches that were deleted remotely
         prune-local = "!f() { git fetch origin --prune; git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d ; }; f"
 
