@@ -10,6 +10,7 @@ alias cleanup='rm *~'
 alias emacs='emacs -geometry +1668+0'
 alias fn='find . -follow -name'
 alias cmake-clean='ls do-cmake* > /dev/null && /bin/rm -rf $(\ls -1 | grep -v do-cmake)'
+alias branch-clean='git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d'
 
 # Default to human readable figures
 alias df='df -h'
