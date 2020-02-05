@@ -45,6 +45,8 @@
         # Prune local branches that were deleted remotely
         prune-local = "!f() { git fetch origin --prune; git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d ; }; f"
 
+        clean-merged = "!sh -c 'git branch --merged master | grep -v master | xargs -n 1 git branch -d'"
+
 [http]
 	sslVerify = false
 	proxy = http://wwwproxy.sandia.gov:80
