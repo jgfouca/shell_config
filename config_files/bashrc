@@ -65,11 +65,11 @@ export MACHINE_POOL=$HOME/machine_list
 # These completion tuning parameters change the default behavior of bash_completion:
 
 # If this shell is interactive, turn on programmable completion enhancements.
-if [ $(hostname) != "sass8000" ]
-then
-    case $- in
-        *i*) source $BASH_COMPLETION
-    esac
+if [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]]; then
+    export BASH_COMPLETION_COMPAT_DIR=/usr/local/etc/bash_completion.d
+    . "/usr/local/etc/profile.d/bash_completion.sh"
+else
+    source $BASH_COMPLETION
 fi
 
 # Switch to clang
