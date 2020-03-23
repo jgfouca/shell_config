@@ -22,7 +22,7 @@
 	clone = =
 
         # Simple sub update
-        su = "submodule update --init"
+        su = "submodule update --init --recursive"
 
         # Easy status
         s = "status"
