@@ -76,3 +76,7 @@ umask 002
 
 # Set ulimit, we don't want to crash the machine
 ulimit -S -v 40097152
+
+# For kokkos on gpu machines
+export CUDA_LAUNCH_BLOCKING=1
+export CUDA_MANAGED_FORCE_DEVICE_ALLOC=1
