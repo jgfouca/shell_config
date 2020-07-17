@@ -42,6 +42,9 @@
         # Easy merge
         m = "merge --no-ff"
 
+        # Easy reuse commit msg
+        ru = "commit --amend --reset-author -c"
+
         # Prune local branches that were deleted remotely
         prune-local = "!f() { git fetch origin --prune; git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d ; }; f"
 
