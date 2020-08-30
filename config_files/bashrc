@@ -72,17 +72,6 @@ else
     source $BASH_COMPLETION
 fi
 
-# Switch to clang
-function sc
-{
-   echo 'module purge'
-   echo 'module load sierra-devel'
-   echo 'module load sierra-compiler/clang/3.0'
-   module purge
-   module load sierra-devel
-   module load sierra-compiler/clang/3.0
-}
-
 # History Options
 # ###############
 
