@@ -1,11 +1,11 @@
 [user]
-	name = James Foucar
-	email = jgfouca@sandia.gov
+        name = James Foucar
+        email = jgfouca@sandia.gov
 [branch]
-	autosetuprebase = always
+        autosetuprebase = always
         rebase = true
 [color]
-	ui = true
+        ui = true
 
 [alias]
         # Removes *all* untracked files, including ignored files
@@ -19,7 +19,7 @@
 
         # Checkout with submodules (for detaching HEAD, use superrepo-branch-switch to change branches)
         checkout-subs = "!f() { git checkout $1; git submodule update --checkout --recursive; }; f"
-	clone = =
+        clone = =
 
         # Simple sub update
         su = "submodule update --init --recursive"
@@ -29,6 +29,9 @@
 
         # Easy pull
         p = "pull"
+
+        # Easy push w/ upstream tracking
+        pu = "push -u origin HEAD"
 
         # Easy branch
         b = "branch"
@@ -54,14 +57,14 @@
         show-merge = "!sh -c 'merge=$(git find-merge $0 $1) && [ -n \"$merge\" ] && git show $merge'"
 
 [http]
-	sslVerify = false
+        sslVerify = false
         proxy = http://wwwproxy.sandia.gov:80
 [push]
-	default = simple
+        default = simple
 [merge]
-	summary = true
-	renamelimit = 99999
+        summary = true
+        renamelimit = 99999
 [core]
-	editor = emacs -nw
+        editor = emacs -nw
         gitproxy=wwwproxy.sandia.gov:80
 #        no_proxy=localhost,.sandia.gov,localhost,127.0.0.1,::1
