@@ -134,6 +134,8 @@ function ldpathadd
     fi
 }
 
+load_scream () { eval $(dump-scream-env $1); }
+
 #Set prompts
 export PS1="\[\e[35;1m\]\h@\[\e[31;1m\]<\w>% \[\e[0m\]"
 export PS2="\[\e[31;1m\]> \[\e[0m\]"
