@@ -18,7 +18,7 @@ unset PROMPT_COMMAND
 
 if [ -e /projects/sems/modulefiles/utils/sems-modules-init.sh ]; then
     source /projects/sems/modulefiles/utils/sems-modules-init.sh
-    module load sems-git sems-python/2.7.9 sems-pylint
+    module load sems-git sems-python/3.5.2 sems-pylint
 fi
 
 export PYTHONDONTWRITEBYTECODE=True
