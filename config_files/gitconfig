@@ -61,7 +61,7 @@
 
 [http]
         sslVerify = false
-        proxy = http://wwwproxy.sandia.gov:80
+        proxy = http://proxy.sandia.gov:80
 [push]
         default = simple
 [merge]
@@ -69,5 +69,5 @@
         renamelimit = 99999
 [core]
         editor = emacs -nw
-        gitproxy=wwwproxy.sandia.gov:80
+        gitproxy=proxy.sandia.gov:80
 #        no_proxy=localhost,.sandia.gov,localhost,127.0.0.1,::1
