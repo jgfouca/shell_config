@@ -16,9 +16,12 @@ fi
 
 unset PROMPT_COMMAND
 
-if [ -e /projects/sems/modulefiles/utils/sems-modules-init.sh ]; then
-    source /projects/sems/modulefiles/utils/sems-modules-init.sh
-    module load sems-git sems-python/3.5.2 sems-pylint
+if [ -e /projects/sems/modulefiles/utils/sems-archive-modules-init.sh ]; then
+    source /projects/sems/modulefiles/utils/sems-archive-modules-init.sh
+    module load sems-archive-git
+    # source /projects/sems/modulefiles/utils/sems-modules-init.sh
+    # module load sems-git
+    export PATH=/ascldap/users/jgfouca/packages/Python-3.8.5/bin:$PATH
 fi
 
 export PYTHONDONTWRITEBYTECODE=True
@@ -29,6 +32,7 @@ export CIME_MODEL=e3sm
 # pick up these changes. For example, they will be picked up by
 # % ssh $(hostname) which $(exe)
 
+export PATH=.:$PATH    # cwd
 export PATH=/usr/local/bin:$PATH    # kinit
 export PATH=/sierra/dev/jgfouca/repositories/toolset/sntools/engine:/sierra/dev/jgfouca/repositories/toolset/contrib:$PATH
 export PATH=/usr/netpub/git/bin:$PATH # git
@@ -39,6 +43,7 @@ export PATH=/usr/netpub/graphviz/graphviz-2.30.1/bin:$PATH # graphviz
 export PATH=/usr/netpub/kcachegrind-0.7.4/bin:$PATH
 export LD_LIBRARY_PATH=/usr/netpub/graphviz/graphviz-2.30.1/lib:$LD_LIBRARY_PATH
 export PATH=/usr/local/java/jdk1.7.0_21/bin:$PATH
+export PATH=~/.local/bin:$PATH # local python utils
 
 # Shell Options
 # #############
