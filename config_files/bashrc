@@ -60,7 +60,7 @@ shopt -s cmdhist    #multi-line commands are added into history all at once
 #shopt -s extglob    #turns on extended pattern matching for all commands
 
 # Set ulimit, we don't want to crash the machine
-ulimit -S -v 40097152
+ulimit -S -v 80097152
 
 export MACHINE_POOL=$HOME/machine_list
 

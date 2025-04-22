@@ -75,7 +75,7 @@ source ~/.setup_colors
 umask 002
 
 # Set ulimit, we don't want to crash the machine
-ulimit -S -v 40097152
+ulimit -S -v 80097152
 
 # For kokkos on gpu machines
 export CUDA_LAUNCH_BLOCKING=1
