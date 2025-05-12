@@ -139,7 +139,7 @@ function ldpathadd
     fi
 }
 
-load_scream () { eval $(scream-env-cmd $1); }
+load_eamxx () { eval $(eamxx-env-cmd $1); }
 
 gtd () { cd $(dirname $(fn $1)); }
 
